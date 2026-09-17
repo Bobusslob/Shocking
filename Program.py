@@ -1,3 +1,5 @@
+from asyncio import subprocess
+import webbrowser
 import sounddevice as sd
 import numpy as np
 from faster_whisper import WhisperModel
@@ -5,10 +7,16 @@ import re
 import os
 import queue
 import time
-
+from selenium import webdriver
+import time
+from selenium import webdriver
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import time
 # =========================
 # SETTINGS
 # =========================
+
 
 MICROPHONE = 4
 
@@ -49,6 +57,10 @@ WORDS = {
     "midget",
     "fatass",
     "shut",
+    "dumb",
+    "dumbest",
+    "idiot",
+    "shittings",
     "tranny"
 }
 
@@ -158,9 +170,23 @@ with sd.InputStream(
                 print("Detected:", detected)
                 print("==============================")
                 print()
+                url = "https://www.youtube.com/watch?v=adtuUeRb4Ts&autoplay=1"
 
-                os.system("pkill chrome")
+                options = Options()
+                options.add_argument("--autoplay-policy=no-user-gesture-required")
 
+                driver = webdriver.Chrome(options=options)
+
+                # Open the first tab
+                driver.get(url)
+                time.sleep(3)
+
+                # Open the remaining tabs
+                for i in range(9):
+                    driver.execute_script(f"window.open('{url}', '_blank');")
+                    time.sleep(3)
+
+                print("Opened all videos.")
         except KeyboardInterrupt:
             print("\nStopped.")
             break
